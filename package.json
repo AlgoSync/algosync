@@ -4,7 +4,8 @@
   "description": "Elevate learning through flashcard mastery",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\""
   },
   "dependencies": {
     "react": "^18.2.0",
