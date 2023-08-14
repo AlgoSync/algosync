@@ -14,3 +14,18 @@
 
 
  </div> 
+
+# What is AlgoSync? 
+Algorithm practice for aspiring software engineers can be a monster, especially when it's unstructured . With the aim of providing a way for aspiring developers to track their progress in practicing challenging algorithms, we are developing a tool to help them keep track of algorithms solved with, as a stretch feature, an automatic system for revisiting old problems to keep their skills honed. 
+
+# Features Coming Soon
+- [ ] Algorithm tracking
+- [ ] Algorithm tagging
+
+
+# Meet the Team 
+- [Eric Esposito](https://github.com/Ericesposito)
+- [Joie Zhang](https://github.com/joie-zhang) 
+- [Paul Glenn](https://github.com/paglenn)
+- [Sean Kelly](https://github.com/brok3turtl3)
+- [Siful Siddiki](https://github.com/sifulsidd)
