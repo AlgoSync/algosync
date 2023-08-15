@@ -2,21 +2,26 @@ import React, { useRef } from "react";
 import { UseSelector, useDispatch } from "react-redux";
 import { login } from "../state/userSlice";
 import { useNavigate } from "react-router-dom";
-export const Login = () => {
+export const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const email = useRef(null);
   const password = useRef(null);
+  const password2 = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email.current || !password.current) {
+    console.log("submit handler");
+    if (email.current === null || password.current === null) {
       alert("you must enter a username and a password!");
       return;
+    } else if (password.current !== password2.current) {
+      alert("Your passwords must match!");
+      return;
     }
-    console.log(email.current, password.current);
 
-    // ADD API CALL AND RESPONSE VALIDATION HERE
+    // ADD API CALL AND VALIDATION   HERE
     dispatch(login(email.current));
     navigate("/app");
   };
@@ -39,9 +44,17 @@ export const Login = () => {
           placeholder="password"
           onChange={(e) => (password.current = e.target.value)}
         />
-        <button type="submit"> Login </button>
-        <button onClick={() => navigate("/signup")}>
-          Haven't created an account yet? Sign Up
+
+        <input
+          id="login-password2"
+          name="password2"
+          type="password"
+          placeholder="Reenter Password"
+          onChange={(e) => (password2.current = e.target.value)}
+        />
+        <button type="submit"> Sign Up </button>
+        <button onClick={(e) => navigate("/")}>
+          Already signed up? Log in
         </button>
       </form>
     </div>
