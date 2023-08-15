@@ -19,6 +19,7 @@ pool
   .catch((err) => console.log("error: ", err));
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 
 //DB CONNECT CALL GOES HERE
