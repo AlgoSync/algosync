@@ -1,5 +1,5 @@
 import React from "react";
-import { ProblemDisplay } from "./components/ProblemDisplay.jsx";
+import { ProblemDisplay } from "./components/problemDisplay";
 import { Login } from "./components/login";
 
 const App = () => {
