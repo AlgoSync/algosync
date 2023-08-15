@@ -1,6 +1,6 @@
 import db from '../models/dbModel';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'; 
 
 const UserController = {
   async createUser(req, res, next) {
@@ -16,7 +16,7 @@ const UserController = {
 
       // log the sign up
       console.log('New user signup:', newUser.rows[0]);
-      res.locals.newUser = newUser.rows[0];
+    //   res.locals.newUser = newUser.rows[0];
       return next();
     } catch (error) {
       console.error('Error during user signup:', error);
@@ -38,15 +38,14 @@ const UserController = {
       const data = await db.query(query);
       res.locals.data = data.rows[0];
       const hashedPass = data.rows[0].password;
-      const id = data.rows[0].id;
       const passOk = await bcrypt.compare(password, hashedPass);
       if (passOk){
-        const secret = 'SQUIRTLESQUIRTLESQUIRTLE'
-        const accessToken = jwt.sign({id}, secret, {expiresIn: '1d'});
+        const accessToken = jwt.sign(res.locals.data, process.env.SECRET, {expiresIn: '1h'});
         res.cookie('accessToken',accessToken, {
             httpOnly : true,
             secure: true
         });
+        return next();
       }
       else {
         return next({
@@ -67,10 +66,20 @@ const UserController = {
   },
 
 
-  verifyCookie (req, res, next){
-    const cookie = req.cookies;
-    if(!cookie.accessToken) return res.send('User is not signed in');
-    return next();
+  verifyToken (req, res, next){
+    const accessToken = req.cookies.accessToken;
+    try{
+        const user = jwt.verify(accessToken, process.env.SECRET);
+        req.user = user;
+        next();
+    }
+    catch{
+        return next({
+            log: 'Express error in verifyToken Middleware',
+            status: 500,
+            message: { err: 'An error occurred during verifying token' },
+          });
+    }
   }
 };
 
