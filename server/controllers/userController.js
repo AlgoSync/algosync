@@ -41,7 +41,12 @@ const UserController = {
       const id = data.rows[0].id;
       const passOk = await bcrypt.compare(password, hashedPass);
       if (passOk){
-        return next();
+        const secret = 'SQUIRTLESQUIRTLESQUIRTLE'
+        const accessToken = jwt.sign({id}, secret, {expiresIn: '1d'});
+        res.cookie('accessToken',accessToken, {
+            httpOnly : true,
+            secure: true
+        });
       }
       else {
         return next({
