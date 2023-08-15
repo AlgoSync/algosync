@@ -7,16 +7,22 @@ const UserController = {
     try {
       console.log('------entering create user controller----');
       console.log('body: ', req.body);
-      const { password, username} = req.body;
-      const hashed = await bcrypt.hash(password, 10);
-      const query =
-        'INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *';
-      const values = [username, hashed];
-      const newUser = await db.query(query, values);
-
-      // log the sign up
-      console.log('New user signup:', newUser.rows[0]);
-    //   res.locals.newUser = newUser.rows[0];
+      const { password, email} = req.body;
+      const isValid = email.match(/[\w\d\.]+@[a-z]+\.[\w]+$/gim);
+      if(isValid === null){
+        res.json('Invalid Email');
+      }
+      else{
+        const hashed = await bcrypt.hash(password, 10);
+        const query =
+          'INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *';
+        const values = [email, hashed];
+        const newUser = await db.query(query, values);
+  
+        // log the sign up
+        console.log('New user signup:', newUser.rows[0]);
+      //   res.locals.newUser = newUser.rows[0];
+      } 
       return next();
     } catch (error) {
       console.error('Error during user signup:', error);
