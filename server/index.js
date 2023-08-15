@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import dotenv from "dotenv";
 import pool from "./config/dbConnect.js";
+import cookieParser from "cookie-parser";
 
 //IMPORT ROUTES
 import userRoutes from "./routes/userRoutes.js";
