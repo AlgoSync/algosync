@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { setProblem } from "../state/workingProblem";
 export const ProblemDisplay = () => {
   const problem = useSelector((state) => state.workingProblem);
   const dispatch = useDispatch();
@@ -10,8 +11,8 @@ export const ProblemDisplay = () => {
       alert("Enter a leetCode problem URL");
       return;
     }
-    const problem = getLeetCodeProblem(problemURL.current);
-    console.log(problem);
+    const problem = await getLeetCodeProblem(problemURL.current);
+    dispatch(setProblem(problem));
   };
 
   return (
@@ -45,10 +46,12 @@ async function getLeetCodeProblem(url) {
         };
       });
     })
-    .then((problems) =>
-      problems.filter((problem) => problem.question_title_slug === problem_slug)
+    .then(
+      (problems) =>
+        problems.filter(
+          (problem) => problem.question_title_slug === problem_slug
+        )[0]
     )
     .catch((err) => console.log("Error: ", err));
-  console.log(problem);
   return problem;
 }
