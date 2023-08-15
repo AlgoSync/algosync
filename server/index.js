@@ -1,15 +1,20 @@
 import express from "express";
 import path from "path";
 //IMPORT DB CONNECT SCRIPT
-
+import cookieParser from 'cookie-parser';
 import dotenv from "dotenv";
+
 
 dotenv.config();
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 
 //DB CONNECT CALL GOES HERE
+
+import userRoutes from './routes/userRoutes';
+app.use('/user', userRoutes);
 
 const __dirname = path.resolve();
 
