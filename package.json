@@ -15,6 +15,7 @@
     "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.1",
+    "pg": "^8.11.2",
     "shieldql": "^1.0.1",
     "style-loader": "^3.3.3"
   },
