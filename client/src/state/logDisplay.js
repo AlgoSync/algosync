@@ -9,11 +9,9 @@ export const problemLogDisplaySlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(logout, (state) => {
-        state = [];
-      })
-      .addDefaultCase((state, action) => {});
+    builder.addCase(logout, (state) => {
+      return [];
+    });
   },
 });
 

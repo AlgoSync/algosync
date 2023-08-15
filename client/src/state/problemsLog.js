@@ -7,13 +7,13 @@ export const problemLogSlice = createSlice({
   initialState: [],
   reducers: {
     setProblemLog: (state, action) => {
-      state.push(...action.payload);
+      return action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(logout, (state) => {
-        state = [];
+        return [];
       })
       .addDefaultCase((state, action) => {});
   },

@@ -5,15 +5,13 @@ export const problemSlice = createSlice({
   initialState: { question_id: 1, question_title: "Add Two Numbers" },
   reducers: {
     setProblem: (state, action) => {
-      state = action.payload;
+      return action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(logout, (state) => {
-        state = {};
-      })
-      .addDefaultCase((state, action) => {});
+    builder.addCase(logout, () => {
+      return {};
+    });
   },
 });
 
