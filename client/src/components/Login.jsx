@@ -23,6 +23,7 @@ export const Login = () => {
 
   return (
     <div>
+      <button onClick={() => navigate("/app")}> TAKE ME TO THE APP</button>
       <div> Login </div>
       <form onSubmit={handleSubmit}>
         <input
