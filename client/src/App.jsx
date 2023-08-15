@@ -1,7 +1,12 @@
 import React from "react";
+import { ProblemDisplay } from "./components/problemDisplay";
 
 const App = () => {
-  return <div>Whats up front end type people!??!</div>;
+  return (
+    <div>
+      <ProblemDisplay />
+    </div>
+  );
 };
 
 export default App;
