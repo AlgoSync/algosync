@@ -1,7 +1,4 @@
 import express from 'express';
-//ENDPOINT  POST api/users
-//PURPOSE   Register a new user
-//ACCESS    Public
 
 const router = express.Router();
 

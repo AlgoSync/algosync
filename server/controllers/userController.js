@@ -1,6 +1,10 @@
 import db from '../models/dbModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'; 
+//ENDPOINT  POST api/users
+//PURPOSE   Register a new user
+//ACCESS    Public
+
 
 const UserController = {
   async createUser(req, res, next) {
