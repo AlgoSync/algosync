@@ -65,6 +65,13 @@ const UserController = {
       });
     }
   },
+
+
+  verifyCookie (req, res, next){
+    const cookie = req.cookies;
+    if(!cookie.accessToken) return res.send('User is not signed in');
+    return next();
+  }
 };
 
 
