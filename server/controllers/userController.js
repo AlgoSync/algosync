@@ -22,7 +22,7 @@ const UserController = {
       console.error('Error during user signup:', error);
       return next({
         log: 'Express error in createUser Middleware',
-        status: 500,
+        status: 503,
         message: { err: 'An error occurred during sign-up' },
       });
     }
@@ -36,11 +36,11 @@ const UserController = {
       const query =
         `SELECT * FROM users WHERE username = '${username}'`;
       const data = await db.query(query);
-      res.locals.data = data.rows[0];
+      const userInfo = data.rows[0];
       const hashedPass = data.rows[0].password;
       const passOk = await bcrypt.compare(password, hashedPass);
       if (passOk){
-        const accessToken = jwt.sign(res.locals.data, process.env.SECRET, {expiresIn: '1h'});
+        const accessToken = jwt.sign(userInfo, process.env.SECRET, {expiresIn: '1h'});
         res.cookie('accessToken',accessToken, {
             httpOnly : true,
             secure: true
@@ -50,7 +50,7 @@ const UserController = {
       else {
         return next({
           log: 'Failed credentials',
-          status: 400,
+          status: 401,
           message: { err: 'Failed matching user credentials' },
         })
       }
@@ -70,7 +70,7 @@ const UserController = {
     const accessToken = req.cookies.accessToken;
     try{
         const user = jwt.verify(accessToken, process.env.SECRET);
-        req.user = user;
+        res.locals.user = user;
         next();
     }
     catch{
