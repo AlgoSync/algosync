@@ -40,7 +40,7 @@ const UserController = {
       const hashedPass = data.rows[0].password;
       const passOk = await bcrypt.compare(password, hashedPass);
       if (passOk){
-        const accessToken = jwt.sign(userInfo, process.env.SECRET, {expiresIn: '1h'});
+        const accessToken = await jwt.sign(userInfo, process.env.SECRET, {expiresIn: '1h'});
         res.cookie('accessToken',accessToken, {
             httpOnly : true,
             secure: true
@@ -66,10 +66,10 @@ const UserController = {
   },
 
 
-  verifyToken (req, res, next){
+  async verifyToken (req, res, next){
     const accessToken = req.cookies.accessToken;
     try{
-        const user = jwt.verify(accessToken, process.env.SECRET);
+        const user = await jwt.verify(accessToken, process.env.SECRET);
         res.locals.user = user;
         next();
     }
