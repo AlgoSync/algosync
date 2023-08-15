@@ -1,15 +1,31 @@
 import express from "express";
 import path from "path";
-//IMPORT DB CONNECT SCRIPT
-
 import dotenv from "dotenv";
+import pool from "./config/dbConnect.js";
 
+//IMPORT ROUTES
+import userRoutes from "./routes/userRoutes.js";
+import problemRoutes from "./routes/problemRoutes.js";
 dotenv.config();
+
+//INSTANTIATE DB OBJECT
+
+const query =
+  "INSERT INTO users (user_id, username, password) VALUES (5, 'test2', 'test2') RETURNING *;";
+
+pool
+  .query(query)
+  .then((result) => console.log(result.rows))
+  .catch((err) => console.log("error: ", err));
 
 const app = express();
 app.use(express.json());
 
 //DB CONNECT CALL GOES HERE
+
+//INVOKE ROUTES
+app.use("/api/users", userRoutes);
+app.use("/api/problems", problemRoutes);
 
 const __dirname = path.resolve();
 
@@ -20,10 +36,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
   );
 }
-
-app.get("/", (req, res) => {
-  res.send("TEST");
-});
 
 //REPLACE THIS WITH A NICE 404 PAGE
 app.get("*", (req, res) => {
