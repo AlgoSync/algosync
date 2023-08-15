@@ -1,4 +1,5 @@
 # why is .env still here? 
 node_modules
 .env
-build 
+client/build 
+client/node_modules
