@@ -9,7 +9,7 @@ const { verifyToken } = UserController;
 //PURPOSE   Get a problem from db
 //ACCESS    Private
 router.get("/", verifyToken, getProblem, (req, res) => {
-  res.status(200).send("Success!!!");
+  res.status(200).send(res.locals.problem);
 });
 
 //ENDPOINT  GET api/problems/:userID
