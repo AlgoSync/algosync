@@ -11,7 +11,7 @@ import abc from 'pg-copy-streams';
 const { from } = abc;
 
 // Replace with your actual connection URI
-const connectionUri = 'postgres://guuyjnbs:qpnYB-UNCbYV1MZ4rvOadoq48CY2tpSO@bubble.db.elephantsql.com/guuyjnbs';
+const connectionUri = process.env.PG_URI;
 
 const client = new Client({
     connectionString: connectionUri,
