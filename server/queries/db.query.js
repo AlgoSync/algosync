@@ -32,4 +32,34 @@ CREATE TABLE flashcards (
 );
 */
 
+// CREATE TABLE ENTRIES
+
+// create users
+query.createUser =
+    'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *';
+// create problems
+query.createProblem =
+    'INSERT INTO problems(email, password) VALUES($1, $2) RETURNING *';
+// create flashcards
+query.createFlashcardCustomized =
+    `INSERT INTO flashcards(
+        user_id, 
+        question_id, 
+        question_title, 
+        difficulty, 
+        priority, 
+        is_solved, 
+        times_solved, 
+        date_last_solved
+    ) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`;
+
+query.createFlashcardDefaults =
+    `INSERT INTO flashcards(
+        user_id, 
+        question_id, 
+        question_title, 
+        difficulty, 
+        priority
+    ) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+
 export default query;
