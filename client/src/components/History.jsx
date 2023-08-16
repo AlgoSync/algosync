@@ -45,7 +45,7 @@ export const History = () => {
           >
             Problem: No. {problem.question_id} - {problem.question_title}{" "}
           </a>
-          | Solved: {problem.solved}
+          {problem.is_solved ? "(Solved)" : null}
         </div>
       )
     );
@@ -61,7 +61,7 @@ export const History = () => {
         className="bg-teal-400 hover:bg-teal-600 text-white font-bold p-2 m-2 rounded"
         onClick={() =>
           dispatch(
-            setProblemLogDisplay(allProblems.filter((p) => p.difficulty === i))
+            setProblemLogDisplay(allProblems.filter((p) => p.difficulty == i))
           )
         }
       >
@@ -74,7 +74,7 @@ export const History = () => {
         className="bg-blue-300 hover:bg-blue-500 text-white font-bold p-2 m-2 rounded"
         onClick={() =>
           dispatch(
-            setProblemLogDisplay(allProblems.filter((p) => p.priority === i))
+            setProblemLogDisplay(allProblems.filter((p) => p.priority == i))
           )
         }
       >
