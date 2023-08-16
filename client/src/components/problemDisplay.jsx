@@ -24,7 +24,7 @@ export const ProblemDisplay = () => {
   const handleURLSubmit = async (e) => {
     e.preventDefault();
     if (!problemURL.current) {
-      alert("Enter a leetCode problem URL");
+      alert("Enter a leetCode problem URL o-(^_^o-) ");
       return;
     }
     const problem = await getLeetCodeProblem(problemURL.current);
@@ -34,8 +34,10 @@ export const ProblemDisplay = () => {
   const handleProblemSubmit = async (e) => {
     e.preventDefault();
     if (!priority.current) {
-      console.log("please mark problem review priority");
+      console.log("please mark problem review priority o-(^_^o-) ");
       return;
+    } else if (!problem) {
+      alert("Please enter a problem to record o-(^_^o-) ");
     }
 
     /// this is the data that can reasonably sent back from a URL-based problem.
@@ -46,7 +48,7 @@ export const ProblemDisplay = () => {
       priority: priority.current,
       date: Date.now(),
       solved,
-      user,
+      user_id: user.user_id,
     };
 
     // PUT request to

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
 import { useNavigate } from "react-router-dom";
 // import { all } from "axios";
+import { titleToURL } from "../helpers/methods";
 import { difficultyKey, priorityKey } from "../helpers/keys";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
@@ -27,10 +28,13 @@ export const History = () => {
       displayProblemComponents.push(
         <div key={index}>
           {/* Title contains link to problem on leetcode */}
-          <a href={titleToURL(problem.question_title)}>
+          <a
+            href={titleToURL(problem.question_title)}
+            className="text-blue-600 underline"
+          >
             Problem: No. {problem.question_id} - {problem.question_title}{" "}
           </a>
-          Solved: {problem.solved}
+          | Solved: {problem.solved}
         </div>
       )
     );
@@ -88,12 +92,4 @@ export const History = () => {
       </section>
     </div>
   );
-};
-
-const titleToURL = function (title) {
-  const titleLower = title.toLowerCase();
-  const titleKebab = titleLower.replaceAll(" ", "-");
-  const url = `https://leetcode.com/problems/${titleKebab}/`;
-  console.log(url);
-  return url;
 };

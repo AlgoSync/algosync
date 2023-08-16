@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { UseSelector, useDispatch } from "react-redux";
 import { login } from "../state/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const email = useRef(null);
   const password = useRef(null);
+  const [invalid, showInvalid] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +15,7 @@ export const Login = () => {
       alert("you must enter a username and a password!");
       return;
     }
-
+    console.log(email.current, password.current);
     // ADD API CALL AND RESPONSE VALIDATION HERE
     const response = await fetch("/api/users/login", {
       method: "POST",
@@ -26,12 +27,16 @@ export const Login = () => {
         password: password.current,
       }),
     });
-
+    console.log(response);
     const data = await response.json();
-    console.log("Error: ", data.err);
-
-    dispatch(login(email.current));
-    navigate("/app");
+    console.log("Frontend Error: ", data, typeof data);
+    if (data.err) {
+      console.log("server returned error successfully!");
+      showInvalid(true);
+    } else {
+      dispatch(login(data.user));
+      navigate("/app");
+    }
   };
 
   return (
@@ -61,6 +66,9 @@ export const Login = () => {
           {" "}
           Login{" "}
         </button>
+        <div className="text-red-600">
+          {invalid ? "Invalid username or email!" : null}
+        </div>
         <div className="flex flex-row justify-around w-full m-8">
           <div className="flex flex-col justify-center text-lg">
             Don't have an account?

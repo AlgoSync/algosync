@@ -32,14 +32,14 @@ export const Signup = () => {
     });
 
     const data = await response.json();
-    console.log(data);
+    console.log("message", data);
     if (!response.ok) {
-      throw new Error(data.message || "An error occurred");
+      alert(data.message || "An error occurred");
+    } else {
+      dispatch(login(data.user));
+      navigate("/app");
     }
     // ADD API CALL AND VALIDATION   HERE
-
-    dispatch(login(email.current));
-    navigate("/app");
   };
 
   return (
