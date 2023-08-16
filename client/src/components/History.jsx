@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
 import { useNavigate } from "react-router-dom";
-import { all } from "axios";
+// import { all } from "axios";
+import { difficultyKey, priorityKey } from "../helpers/keys";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
@@ -45,7 +46,7 @@ export const History = () => {
           )
         }
       >
-        {difficultyKeys[i]}
+        {difficultyKey[i]}
       </button>
     );
     buttons.push(
@@ -57,7 +58,7 @@ export const History = () => {
           )
         }
       >
-        {priorityKeys[i]}
+        {priorityKey[i]}
       </button>
     );
   }
@@ -84,16 +85,4 @@ export const History = () => {
       </section>
     </div>
   );
-};
-
-// six buttons, one per category
-const priorityKeys = {
-  1: "Low Priority",
-  2: "Medium Priority",
-  3: "High Priority",
-};
-const difficultyKeys = {
-  1: "Easy Difficulty",
-  2: "Medium Difficulty",
-  3: "Hard Difficulty",
 };

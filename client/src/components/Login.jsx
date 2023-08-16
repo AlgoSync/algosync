@@ -14,7 +14,6 @@ export const Login = () => {
       alert("you must enter a username and a password!");
       return;
     }
-    console.log(email.current, password.current);
 
     // ADD API CALL AND RESPONSE VALIDATION HERE
     dispatch(login(email.current));
@@ -41,15 +40,31 @@ export const Login = () => {
           placeholder="password"
           onChange={(e) => (password.current = e.target.value)}
         />
-        <button type="submit" className="bg-teal-400 hover:bg-teal-600 text-white font-bold my-4 py-2 px-5 rounded"> Login </button>
+        <button
+          type="submit"
+          className="bg-teal-400 hover:bg-teal-600 text-white font-bold my-4 py-2 px-5 rounded"
+        >
+          {" "}
+          Login{" "}
+        </button>
         <div className="flex flex-row justify-around w-full m-8">
-          <div className="flex flex-col justify-center text-lg">Don't have an account?</div>
-          <button onClick={() => navigate("/signup")} className="bg-indigo-400 hover:bg-indigo-700 text-white font-bold my-4 py-1 px-5 rounded">
+          <div className="flex flex-col justify-center text-lg">
+            Don't have an account?
+          </div>
+          <button
+            onClick={() => navigate("/signup")}
+            className="bg-indigo-400 hover:bg-indigo-700 text-white font-bold my-4 py-1 px-5 rounded"
+          >
             Sign Up
           </button>
         </div>
       </form>
-      <button onClick={() => navigate("/app")}> TAKE ME TO THE APP</button>
+      <button
+        className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-1 rounded"
+        onClick={() => navigate("/app")}
+      >
+        JUST TAKE ME TO THE APP!
+      </button>
     </div>
   );
 };
