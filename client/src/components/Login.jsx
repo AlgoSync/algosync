@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { UseSelector, useDispatch } from "react-redux";
 import { login } from "../state/userSlice";
 import { useNavigate } from "react-router-dom";
-// 
+//
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ export const Login = () => {
     });
     console.log(response);
     const data = await response.json();
-    console.log("Frontend Error: ", data, typeof data);
     if (data.err) {
       console.log("server returned error successfully!");
       showInvalid(true);
