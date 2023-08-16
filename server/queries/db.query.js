@@ -17,7 +17,7 @@ CREATE TABLE problems(
 );
 */
 
-// join table: 
+// join table:
 /*
 CREATE TABLE flashcards (
     flashcard_id SERIAL PRIMARY KEY, 
@@ -36,13 +36,10 @@ CREATE TABLE flashcards (
 
 // create users
 query.createUser =
-    'INSERT INTO users(email, password) VALUES($1, $2) RETURNING *';
-// create problems
-query.createProblem =
-    'INSERT INTO problems(email, password) VALUES($1, $2) RETURNING *';
+  "INSERT INTO users(email, password) VALUES($1, $2) RETURNING *";
+
 // create flashcards
-query.createFlashcardCustomized =
-    `INSERT INTO flashcards(
+query.createFlashcardCustomized = `INSERT INTO flashcards(
         user_id, 
         question_id, 
         question_title, 
@@ -53,8 +50,7 @@ query.createFlashcardCustomized =
         date_last_solved
     ) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`;
 
-query.createFlashcardDefaults =
-    `INSERT INTO flashcards(
+query.createFlashcardDefaults = `INSERT INTO flashcards(
         user_id, 
         question_id, 
         question_title, 
@@ -68,10 +64,10 @@ query.createFlashcardDefaults =
 // selecting all flashcards for a given user, based on a given difficulty level
 // selecting one flashcard based on the flashcard ID
 
-// Note: everything below this line is a lower priority. 
+// Note: everything below this line is a lower priority.
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
 
-// update 
+// update
 
 // update a flashcard's is_solved status to TRUE
 // update a flashcard's is_solved status to FALSE

@@ -4,13 +4,21 @@ import query from "../queries/db.query.js";
 
 const ProblemsController = {
   getProblem: async (req, res, next) => {
-    console.log("getProblemHIT!!!");
+    //PULL URL OFF REQ QUERY
     const { url } = req.query;
     const problem_slug = url.match(/\/([^/]+)\/$/)[1];
     console.log(problem_slug);
 
     try {
+      //BUILD QUERY
+      //BUILD VALUES ARRAY FOR QUERY
       const values = [];
+
+      //INITIATE QUERY
+
+      //BUILD RESPONSE OBJECT
+
+      //PASS OUT OF MIDDLEWARE
       next();
     } catch (error) {
       return next({
@@ -27,6 +35,7 @@ const ProblemsController = {
       //BUILD QUERY
       //INITIATE QUERY TO DB
       //BUILD RES.LOCALS RESPONSE OBJECT
+      //PASS OUT OF MIDDLEWARE
     } catch (error) {
       return next({
         log: "Express error in getUsersProblems Middleware",

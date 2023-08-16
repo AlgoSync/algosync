@@ -22,8 +22,8 @@ router.get("/:userID", verifyToken, getUsersProblems, (req, res) => {
 //ENDPOINT  PUT api/problems
 //PURPOSE   Add a users problem to db
 //ACCESS    Private
-router.put("/", verifyToken, addProblem, (req, res) => {
-  res.status(200).send("Success!!!");
+router.put("/", addProblem, (req, res) => {
+  res.status(201).send("Success!!!");
 });
 
 export default router;
