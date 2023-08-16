@@ -66,6 +66,9 @@ query.createFlashcardDefaults =
 // selecting a user for verify user (already complete)
 query.verifyUser =
     `SELECT * FROM users WHERE email = $1;`;
+// selecting one problem in the DB based on the slug
+query.getProblem =
+    `SELECT * FROM problems WHERE question_title_slug = $1;`;
 
 // Note: everything below this line is a lower priority. 
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
