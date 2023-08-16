@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { UseSelector, useDispatch } from "react-redux";
 import { login } from "../state/userSlice";
 import { useNavigate } from "react-router-dom";
+// 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export const Login = () => {
       alert("you must enter a username and a password!");
       return;
     }
-    console.log(email.current, password.current);
+
     // ADD API CALL AND RESPONSE VALIDATION HERE
     const response = await fetch("/api/users/login", {
       method: "POST",

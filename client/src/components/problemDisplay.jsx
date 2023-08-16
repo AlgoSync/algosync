@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProblem } from "../state/workingProblem";
 import { difficultyKey } from "../helpers/keys";
+import { LogoutButton } from "./Logout";
+
 export const ProblemDisplay = () => {
   // redux state observations
   const problem = useSelector((state) => state.workingProblem);
@@ -153,6 +155,7 @@ export const ProblemDisplay = () => {
           </button>
         </div>
       </form>
+      <LogoutButton clickHandler={() => navigate("/logout")} />
     </div>
   );
 };

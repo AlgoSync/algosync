@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
 import { useNavigate } from "react-router-dom";
-// import { all } from "axios";
 import { titleToURL } from "../helpers/methods";
 import { difficultyKey, priorityKey } from "../helpers/keys";
+import { LogoutButton } from "./Logout";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
@@ -90,6 +90,7 @@ export const History = () => {
         <div className="flashcard-bundles">{buttons}</div>
         <div> {display}</div>
       </section>
+      <LogoutButton clickHandler={() => navigate("/logout")} />
     </div>
   );
 };
