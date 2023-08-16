@@ -26,7 +26,10 @@ export const History = () => {
     displayProblems.forEach((problem, index) =>
       displayProblemComponents.push(
         <div key={index}>
-          Problem: No. {problem.question_id} - {problem.question_title}
+          {/* Title contains link to problem on leetcode */}
+          <a href={titleToURL(problem.question_title)}>
+            Problem: No. {problem.question_id} - {problem.question_title}{" "}
+          </a>
           Solved: {problem.solved}
         </div>
       )
@@ -80,9 +83,17 @@ export const History = () => {
             All Problems
           </button>
         </div>
-        <div>{buttons}</div>
-        <div className="flashcard-bundles">{display}</div>
+        <div className="flashcard-bundles">{buttons}</div>
+        <div> {display}</div>
       </section>
     </div>
   );
+};
+
+const titleToURL = function (title) {
+  const titleLower = title.toLowerCase();
+  const titleKebab = titleLower.replaceAll(" ", "-");
+  const url = `https://leetcode.com/problems/${titleKebab}/`;
+  console.log(url);
+  return url;
 };
