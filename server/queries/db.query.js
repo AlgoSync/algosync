@@ -71,4 +71,16 @@ query.createFlashcardDefaults =
 // Note: everything below this line is a lower priority. 
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
 
+// update 
+
+// update a flashcard's is_solved status to TRUE
+// update a flashcard's is_solved status to FALSE
+// update a flashcard's times_solved
+// update a flashcard's priority
+// update a flashcard's date_last_solved
+
+// delete
+
+// delete a flashcard
+
 export default query;
