@@ -19,7 +19,7 @@ export const ProblemDisplay = () => {
 
   // these two are stored in state because they do affect the presentational components. they are simple & not used anywhere else so not stored in the store
   const [solved, markSolved] = useState(false);
-  const [isActivePriority, setActivePriority] = useState([false, false, false]);
+  const [activePrio, setActivePrio] = useState([400, 400, 400]);
 
   const handleURLSubmit = async (e) => {
     e.preventDefault();
@@ -58,9 +58,15 @@ export const ProblemDisplay = () => {
     }).then((response) => response.json());
   };
 
-  const handlePriorityClick = (prio) => {
+  const handlePrioClick = (prio) => {
     priority.current = prio;
-    setActivePriority(isActivePriority.map((el, index) => index + 1 === prio));
+    setActivePrio(
+      activePrio.map((el, index) => {
+        console.log(el);
+        return index + 1 === prio ? 600 : 400;
+      })
+    );
+    console.log(...activePrio);
   };
 
   return (
@@ -88,14 +94,12 @@ export const ProblemDisplay = () => {
           type="submit"
           className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
         >
-          {" "}
           Practice
         </button>
       </form>
       <div className="flex flex-row justify-center my-6 text-xl text-gray-700 font-semibold underline underline-offset-8">
         Problem: No. {problem.question_id} - {problem.question_title}
         <p>
-          {" "}
           {typeof problem.difficulty === "string"
             ? problem.difficulty
             : difficultyKey[problem.difficulty]}{" "}
@@ -109,10 +113,8 @@ export const ProblemDisplay = () => {
             id="mark-high-prio"
             type="button"
             key="high-prio"
-            onClick={() => handlePriorityClick(3)}
-            className={`break-normal w-1/4 bg-red-400 hover:bg-red-600  active:bg-red-600  text-white font-bold py-2 px-2 rounded ${
-              isActivePriority[2] ? "active" : ""
-            }`}
+            onClick={() => handlePrioClick(3)}
+            className={`break-normal w-1/4 bg-red-${activePrio[2]} hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
           >
             High Priority
           </button>
@@ -120,10 +122,8 @@ export const ProblemDisplay = () => {
             id="mark-medium-prio"
             type="button"
             key="med-prio"
-            onClick={() => handlePriorityClick(2)}
-            className={`break-normal w-1/4 bg-yellow-400 hover:bg-yellow-600 active:bg-yellow-600 text-white font-bold py-2 px-2 rounded ${
-              isActivePriority[1] ? "active" : ""
-            }`}
+            onClick={() => handlePrioClick(2)}
+            className={`break-normal w-1/4 bg-yellow-${activePrio[1]} hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
           >
             Medium Priority
           </button>
@@ -131,10 +131,8 @@ export const ProblemDisplay = () => {
             id="mark-low-prio"
             type="button"
             key="low-prio"
-            onClick={() => handlePriorityClick(1)}
-            className={`break-normal w-1/4 bg-green-400 hover:bg-green-600  active:bg-green-600 text-white font-bold py-2 px-2 rounded ${
-              isActivePriority[0] ? "active" : ""
-            }`}
+            onClick={() => handlePrioClick(1)}
+            className={`break-normal w-1/4 bg-green-${activePrio[0]} hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
           >
             Low Priority
           </button>
