@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  res.status(200).send("Success!!!");
+  res.status(200).json({ problem: req.body });
 });
 
 export default router;

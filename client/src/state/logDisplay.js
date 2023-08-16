@@ -5,7 +5,7 @@ export const problemLogDisplaySlice = createSlice({
   name: "problemLogDisplay",
   reducers: {
     setProblemLogDisplay: (state, action) => {
-      state.push(...action.payload);
+      return action.payload;
     },
   },
   extraReducers: (builder) => {
