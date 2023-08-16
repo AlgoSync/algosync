@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
+import { setProblemLog } from "../state/problemsLog";
 import { useNavigate } from "react-router-dom";
 import { titleToURL } from "../helpers/methods";
 import { difficultyKey, priorityKey } from "../helpers/keys";
@@ -9,6 +10,7 @@ import { LogoutButton } from "./Logout";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,8 +19,14 @@ export const History = () => {
   const [display, setDisplay] = useState([]);
 
   // effect hook to set display problems once
-  useEffect(() => {
-    dispatch(setProblemLogDisplay(allProblems));
+  useEffect(async () => {
+    const problemsLog = user
+      ? await fetch(`/api?id=${user.id}`)
+          .then((response) => response.json())
+          .then((data) => data.problems)
+      : [];
+    dispatch(setProblemLog(problemsLog));
+    dispatch(setProblemLogDisplay(problemsLog));
   }, []);
 
   // effect hook to create divs for each display problem and trigger re-render on change to state
