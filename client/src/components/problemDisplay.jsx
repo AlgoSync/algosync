@@ -92,18 +92,21 @@ export const ProblemDisplay = () => {
         />
         <button
           type="submit"
-          className="bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+          className="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded"
         >
           Practice
         </button>
       </form>
-      <div className="flex flex-row justify-center my-6 text-xl text-gray-700 font-semibold underline underline-offset-8">
-        Problem: No. {problem.question_id} - {problem.question_title}
-        <p>
+      <div className="flex flex-col justify-around h-24 text-xl text-gray-700">
+        <div className="font-semibold underline underline-offset-8 mt-2">
+          Problem: No. {problem.question_id} - {problem.question_title}
+        </div>
+        <div >
+          LeetCode Difficulty: {` `}
           {typeof problem.difficulty === "string"
             ? problem.difficulty
             : difficultyKey[problem.difficulty]}{" "}
-        </p>
+        </div>
       </div>
       {/* Section for problem tagging and submission */}
       <form onSubmit={handleProblemSubmit}>
@@ -140,17 +143,18 @@ export const ProblemDisplay = () => {
             Low Priority
           </button>
         </div>
-        <div className="flex flex-row justify-center">
-          <label className="flex flex-row justify-center">
+        <div className="flex flex-row justify-around mt-6">
+          <label className="flex flex-row justify-center my-2 p-2 items-center">
+            <p>Solved {' '}
             <input
               type="checkbox"
               checked={solved}
               onClick={() => markSolved(!solved)}
             />
+            </p>
           </label>
-          <button key="submitProblem" type="submit" className="my-2 p-2">
-            {" "}
-            Save Problem{" "}
+          <button key="submitProblem" type="submit" className="my-2 p-2 break-normal w-1/4 bg-indigo-400 hover:bg-indigo-600 text-white font-bold py-2 px-2 rounded">
+            Save
           </button>
         </div>
       </form>
