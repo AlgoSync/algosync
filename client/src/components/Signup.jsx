@@ -20,7 +20,22 @@ export const Signup = () => {
       alert("Your passwords must match!");
       return;
     }
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          email: email.current,
+          password: password.current
+      })
+  });
 
+  const data = await response.json();
+  console.log(data)
+        if (!response.ok) {
+            throw new Error(data.message || "An error occurred");
+        }
     // ADD API CALL AND VALIDATION   HERE
 
     dispatch(login(email.current));
