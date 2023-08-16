@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setProblem } from "../state/workingProblem";
+import { setProblem, flush } from "../state/workingProblem";
 import { difficultyKey } from "../helpers/keys";
 import { LogoutButton } from "./Logout";
 import { getLeetCodeProblem } from "../helpers/methods";
@@ -62,6 +62,7 @@ export const ProblemDisplay = () => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     }).then((response) => response.json());
+    if (problemSaved.message === "saved") dispatch(flush());
   };
 
   const handlePrioClick = (prio) => {
@@ -103,60 +104,65 @@ export const ProblemDisplay = () => {
           Practice
         </button>
       </form>
-      <div className="flex flex-row justify-center my-6 text-xl text-gray-700 font-semibold underline underline-offset-8">
-        Problem: No. {problem.question_id} - {problem.question_title}
-        <p>
-          {typeof problem.difficulty === "string"
-            ? problem.difficulty
-            : difficultyKey[problem.difficulty]}{" "}
-        </p>
-      </div>
-      {/* Section for problem tagging and submission */}
-      <form onSubmit={handleProblemSubmit}>
-        <div className="my-2">Mark Question Review Priority: </div>
-        <div className="flex flex-row justify-between">
-          <button
-            id="mark-high-prio"
-            type="button"
-            key="high-prio"
-            onClick={() => handlePrioClick(3)}
-            className={`break-normal w-1/4 bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
-          >
-            High Priority
-          </button>
-          <button
-            id="mark-medium-prio"
-            type="button"
-            key="med-prio"
-            onClick={() => handlePrioClick(2)}
-            className={`break-normal w-1/4 bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
-          >
-            Medium Priority
-          </button>
-          <button
-            id="mark-low-prio"
-            type="button"
-            key="low-prio"
-            onClick={() => handlePrioClick(1)}
-            className={`break-normal w-1/4 bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
-          >
-            Low Priority
-          </button>
+
+      {problem ? (
+        <div className="flex flex-row justify-center my-6 text-xl text-gray-700 font-semibold underline underline-offset-8">
+          Problem: No. {problem.question_id} - {problem.question_title}
+          <p>
+            {typeof problem.difficulty === "string"
+              ? problem.difficulty
+              : difficultyKey[problem.difficulty]}{" "}
+          </p>
         </div>
-        <div className="flex flex-row justify-center">
-          <label className="flex flex-row justify-center">
-            <input
-              type="checkbox"
-              checked={solved}
-              onClick={() => markSolved(!solved)}
-            />
-          </label>
-          <button key="submitProblem" type="submit" className="my-2 p-2">
-            {" "}
-            Save Problem{" "}
-          </button>
-        </div>
-      </form>
+      ) : null}
+
+      {problem ? (
+        <form onSubmit={handleProblemSubmit}>
+          <div className="my-2">Mark Question Review Priority: </div>
+          <div className="flex flex-row justify-between">
+            <button
+              id="mark-high-prio"
+              type="button"
+              key="high-prio"
+              onClick={() => handlePrioClick(3)}
+              className={`break-normal w-1/4 bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
+            >
+              High Priority
+            </button>
+            <button
+              id="mark-medium-prio"
+              type="button"
+              key="med-prio"
+              onClick={() => handlePrioClick(2)}
+              className={`break-normal w-1/4 bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
+            >
+              Medium Priority
+            </button>
+            <button
+              id="mark-low-prio"
+              type="button"
+              key="low-prio"
+              onClick={() => handlePrioClick(1)}
+              className={`break-normal w-1/4 bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
+            >
+              Low Priority
+            </button>
+          </div>
+          <div className="flex flex-row justify-center">
+            <label className="flex flex-row justify-center">
+              <input
+                type="checkbox"
+                checked={solved}
+                onClick={() => markSolved(!solved)}
+              />
+            </label>
+            <button key="submitProblem" type="submit" className="my-2 p-2">
+              {" "}
+              Save Problem{" "}
+            </button>
+          </div>
+        </form>
+      ) : null}
       <LogoutButton clickHandler={() => navigate("/logout")} />
     </div>
   );
