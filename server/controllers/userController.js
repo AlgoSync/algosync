@@ -40,8 +40,8 @@ const UserController = {
     try {
       console.log("------entering userLogin controller----");
       console.log("body: ", req.body);
-      const { username, password } = req.body;
-      const query = `SELECT * FROM users WHERE username = '${username}'`;
+      const { email, password } = req.body;
+      const query = `SELECT * FROM users WHERE email = '${email}'`;
       const data = await db.query(query);
       const userInfo = data.rows[0];
       const hashedPass = data.rows[0].password;
