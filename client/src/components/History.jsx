@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
+import { setProblemLog } from "../state/problemsLog";
 import { useNavigate } from "react-router-dom";
-// import { all } from "axios";
+import { titleToURL } from "../helpers/methods";
 import { difficultyKey, priorityKey } from "../helpers/keys";
+import { LogoutButton } from "./Logout";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,8 +19,14 @@ export const History = () => {
   const [display, setDisplay] = useState([]);
 
   // effect hook to set display problems once
-  useEffect(() => {
-    dispatch(setProblemLogDisplay(allProblems));
+  useEffect(async () => {
+    const problemsLog = user
+      ? await fetch(`/api/problems?id=${user.id}`)
+          .then((response) => response.json())
+          .then((data) => data.problems)
+      : [];
+    dispatch(setProblemLog(problemsLog));
+    dispatch(setProblemLogDisplay(problemsLog));
   }, []);
 
   // effect hook to create divs for each display problem and trigger re-render on change to state
@@ -26,8 +35,14 @@ export const History = () => {
     displayProblems.forEach((problem, index) =>
       displayProblemComponents.push(
         <div key={index}>
-          Problem: No. {problem.question_id} - {problem.question_title}
-          Solved: {problem.solved}
+          {/* Title contains link to problem on leetcode */}
+          <a
+            href={titleToURL(problem.question_title)}
+            className="text-blue-600 underline"
+          >
+            Problem: No. {problem.question_id} - {problem.question_title}{" "}
+          </a>
+          | Solved: {problem.solved}
         </div>
       )
     );
@@ -40,6 +55,7 @@ export const History = () => {
     buttons.push(
       <button
         key={`d${i}`}
+        className="bg-teal-400 hover:bg-teal-600 text-white font-bold p-2 m-2 rounded"
         onClick={() =>
           dispatch(
             setProblemLogDisplay(allProblems.filter((p) => p.difficulty === i))
@@ -52,6 +68,7 @@ export const History = () => {
     buttons.push(
       <button
         key={`p${i}`}
+        className="bg-blue-300 hover:bg-blue-500 text-white font-bold p-2 m-2 rounded"
         onClick={() =>
           dispatch(
             setProblemLogDisplay(allProblems.filter((p) => p.priority === i))
@@ -65,24 +82,36 @@ export const History = () => {
 
   return (
     <div>
-      <section>
-        <div className="history-heading-container">Problem Log</div>
-        <div>
+      <div className="flex flex-col justify-center max-w-6xl mx-auto px-6 bg-slate-50 drop-shadow-lg border-solid border-2 border-gray-500 rounded-xl h-full w-4/5">
+        <div className="flex flex-row justify-center text-3xl my-4">
+          Problems Log
+        </div>
+        <div className="flex flex-row justify-center">
           {/* Button to navigate back to  main app page to work on a new problem*/}
           <button
-            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 rounded"
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 mx-6 rounded"
             onClick={() => navigate("/app")}
           >
             Try a New Problem
           </button>
-
-          <button onClick={() => dispatch(setProblemLogDisplay(allProblems))}>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="text-xl my-4">Filter Problems By:</div>
+          <button
+            onClick={() => dispatch(setProblemLogDisplay(allProblems))}
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 mx-6 rounded"
+          >
             All Problems
           </button>
         </div>
-        <div>{buttons}</div>
-        <div className="flashcard-bundles">{display}</div>
-      </section>
+        <div className="grid md:grid-cols-6 grid-cols-3 my-6 mx-6 justify-around">
+          {buttons}
+        </div>
+        <div> {display}</div>
+      </div>
+      <div className="flex flex-row justify-center items-end h-20">
+        <LogoutButton clickHandler={() => navigate("/logout")} />
+      </div>
     </div>
   );
 };

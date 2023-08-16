@@ -4,9 +4,9 @@ const priorityKey = {
   3: "High Priority",
 };
 const difficultyKey = {
-  1: "Easy Difficulty",
-  2: "Medium Difficulty",
-  3: "Hard Difficulty",
+  1: "Easy",
+  2: "Medium",
+  3: "Hard",
 };
 
 export { difficultyKey, priorityKey };
