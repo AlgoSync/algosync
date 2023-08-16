@@ -9,7 +9,7 @@ export const LogoutButton = ({ clickHandler }) => {
   return (
     <div>
       <button
-        className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-2 rounded"
+        className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded"
         onClick={clickHandler}
       >
         Logout
