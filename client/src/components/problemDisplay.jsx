@@ -114,7 +114,7 @@ export const ProblemDisplay = () => {
             type="button"
             key="high-prio"
             onClick={() => handlePrioClick(3)}
-            className={`break-normal w-1/4 bg-red-${activePrio[2]} hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
+            className={`break-normal w-1/4 bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
           >
             High Priority
           </button>
@@ -123,7 +123,7 @@ export const ProblemDisplay = () => {
             type="button"
             key="med-prio"
             onClick={() => handlePrioClick(2)}
-            className={`break-normal w-1/4 bg-yellow-${activePrio[1]} hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
+            className={`break-normal w-1/4 bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
           >
             Medium Priority
           </button>
@@ -132,7 +132,7 @@ export const ProblemDisplay = () => {
             type="button"
             key="low-prio"
             onClick={() => handlePrioClick(1)}
-            className={`break-normal w-1/4 bg-green-${activePrio[0]} hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
+            className={`break-normal w-1/4 bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
           >
             Low Priority
           </button>
