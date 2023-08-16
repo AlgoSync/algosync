@@ -22,13 +22,26 @@ export const ProblemDisplay = () => {
 
   const handleProblemSubmit = async (e) => {
     e.preventDefault();
+    if (!priority.current) {
+      console.log("please mark problem review priority");
+      return;
+    }
     const problemObject = {
       ...problem,
-      priority,
+      priority: priority.current,
       solved,
     };
+    // console.log(problemObject);
 
     // PUT request to
+    const problemSaved = await fetch("/api/problems", {
+      method: "POST",
+      body: JSON.stringify(problemObject),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }).then((response) => response.json());
+    console.log(problemSaved);
+    //if(problemSaved === 'SUCCESS!!!')
   };
 
   return (
@@ -47,13 +60,28 @@ export const ProblemDisplay = () => {
       {/* Section for problem tagging and submission */}
       <form onSubmit={handleProblemSubmit}>
         <div>Mark Question Review Priority: </div>
-        <button id="mark-high-prio" onClick={(priority.current = "High")}>
+        <button
+          id="mark-high-prio"
+          type="button"
+          key="high-prio"
+          onClick={() => (priority.current = "High")}
+        >
           High Priority
         </button>
-        <button id="mark-medium-prio" onClick={(priority.current = "Medium")}>
+        <button
+          id="mark-medium-prio"
+          type="button"
+          key="med-prio"
+          onClick={() => (priority.current = "Medium")}
+        >
           Medium Priority
         </button>
-        <button id="mark-low-prio" onClick={(priority.current = "Low")}>
+        <button
+          id="mark-low-prio"
+          type="button"
+          key="low-prio"
+          onClick={() => (priority.current = "Low")}
+        >
           Low Priority
         </button>
         <label>
@@ -63,7 +91,10 @@ export const ProblemDisplay = () => {
             onClick={() => markSolved(!solved)}
           />
         </label>
-        <button type="submit"> Save Problem </button>
+        <button key="submitProblem" type="submit">
+          {" "}
+          Save Problem{" "}
+        </button>
       </form>
     </div>
   );
