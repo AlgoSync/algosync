@@ -69,7 +69,9 @@ query.verifyUser =
 // selecting one problem in the DB based on the slug
 query.getProblem =
     `SELECT * FROM problems WHERE question_title_slug = $1;`;
-
+// selecting all the flashcards for a given user, based on the user ID
+query.selectUserFlashcards =
+    `SELECT * FROM flashcards WHERE user_id = $1;`;
 // Note: everything below this line is a lower priority. 
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
 // selecting one flashcard based on the flashcard ID
