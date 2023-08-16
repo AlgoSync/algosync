@@ -30,7 +30,10 @@ export const ProblemDisplay = () => {
       alert("Enter a leetCode problem URL o-(^_^o-) ");
       return;
     }
-    const problem = await getLeetCodeProblem(problemURL.current);
+    const problem =
+      (await fetch(`/api/problems?url=${problemURL}`).then((response) =>
+        response.json()
+      )) ?? getLeetCodeProblem(problemURL);
     dispatch(setProblem(problem));
   };
 

@@ -19,14 +19,17 @@ export const History = () => {
   const [display, setDisplay] = useState([]);
 
   // effect hook to set display problems once
-  useEffect(async () => {
-    const problemsLog = user
-      ? await fetch(`/api/problems/${user.id}`)
-          .then((response) => response.json())
-          .then((data) => data.problems)
-      : [];
-    dispatch(setProblemLog(problemsLog));
-    dispatch(setProblemLogDisplay(problemsLog));
+  useEffect(() => {
+    fetch(`/api/problems?user_id=${user.id}`)
+      .then((response) => response.json())
+      .then((data) => data.problems)
+      .then((problemsLog) => {
+        dispatch(setProblemLog(problemsLog));
+        dispatch(setProblemLogDisplay(problemsLog));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // effect hook to create divs for each display problem and trigger re-render on change to state
