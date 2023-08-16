@@ -36,6 +36,11 @@ describe('POST to login route', () => {
             console.log('Could not delete test data');
         }
     }
+
+    afterEach(()=>{
+        deleteTest();
+    });
+
     it('should login successfully', async () => {
         const user = {
             "email": "testuser@test.com",
