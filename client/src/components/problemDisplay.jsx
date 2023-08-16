@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProblem } from "../state/workingProblem";
 import { difficultyKey } from "../helpers/keys";
+import { LogoutButton } from "./Logout";
+import { getLeetCodeProblem } from "../helpers/methods";
+
 export const ProblemDisplay = () => {
   // redux state observations
   const problem = useSelector((state) => state.workingProblem);
@@ -24,7 +27,7 @@ export const ProblemDisplay = () => {
   const handleURLSubmit = async (e) => {
     e.preventDefault();
     if (!problemURL.current) {
-      alert("Enter a leetCode problem URL");
+      alert("Enter a leetCode problem URL o-(^_^o-) ");
       return;
     }
     const problem = await getLeetCodeProblem(problemURL.current);
@@ -34,8 +37,10 @@ export const ProblemDisplay = () => {
   const handleProblemSubmit = async (e) => {
     e.preventDefault();
     if (!priority.current) {
-      console.log("please mark problem review priority");
+      console.log("please mark problem review priority o-(^_^o-) ");
       return;
+    } else if (!problem) {
+      alert("Please enter a problem to record o-(^_^o-) ");
     }
 
     /// this is the data that can reasonably sent back from a URL-based problem.
@@ -46,7 +51,7 @@ export const ProblemDisplay = () => {
       priority: priority.current,
       date: Date.now(),
       solved,
-      user,
+      user_id: user.user_id,
     };
 
     // PUT request to
@@ -117,7 +122,6 @@ export const ProblemDisplay = () => {
             type="button"
             key="high-prio"
             onClick={() => handlePrioClick(3)}
-            // className={`break-normal w-1/4 bg-red-${activePrio[2]} hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
             className={`break-normal w-1/4 bg-red-400 hover:bg-red-600 text-white font-bold py-2 px-2 rounded `}
           >
             High Priority
@@ -127,7 +131,6 @@ export const ProblemDisplay = () => {
             type="button"
             key="med-prio"
             onClick={() => handlePrioClick(2)}
-            // className={`break-normal w-1/4 bg-yellow-${activePrio[1]} hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
             className={`break-normal w-1/4 bg-yellow-400 hover:bg-yellow-600 text-white font-bold py-2 px-2 rounded`}
           >
             Medium Priority
@@ -137,7 +140,6 @@ export const ProblemDisplay = () => {
             type="button"
             key="low-prio"
             onClick={() => handlePrioClick(1)}
-            // className={`break-normal w-1/4 bg-green-${activePrio[0]} hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
             className={`break-normal w-1/4 bg-green-400 hover:bg-green-600 text-white font-bold py-2 px-2 rounded`}
           >
             Low Priority
@@ -158,32 +160,7 @@ export const ProblemDisplay = () => {
           </button>
         </div>
       </form>
+      <LogoutButton clickHandler={() => navigate("/logout")} />
     </div>
   );
 };
-
-// async call to LeetCode api - replace with call to our backend when that works.
-async function getLeetCodeProblem(url) {
-  const problem_slug = url.match(/\/([^/]+)\/$/)[1];
-  const problem = await fetch("https://leetcode.com/api/problems/algorithms/")
-    .then((response) => response.json())
-    .then((data) => {
-      //console.log(data);
-      return data["stat_status_pairs"].map((problem) => {
-        return {
-          question_id: problem.stat.question_id,
-          question_title: problem.stat.question__title,
-          question_title_slug: problem.stat.question__title_slug,
-          difficulty: problem.difficulty.level,
-        };
-      });
-    })
-    .then(
-      (problems) =>
-        problems.filter(
-          (problem) => problem.question_title_slug === problem_slug
-        )[0]
-    )
-    .catch((err) => console.log("Error: ", err));
-  return problem;
-}

@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
 import { useNavigate } from "react-router-dom";
-// import { all } from "axios";
+import { titleToURL } from "../helpers/methods";
 import { difficultyKey, priorityKey } from "../helpers/keys";
+import { LogoutButton } from "./Logout";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
@@ -26,8 +27,14 @@ export const History = () => {
     displayProblems.forEach((problem, index) =>
       displayProblemComponents.push(
         <div key={index}>
-          Problem: No. {problem.question_id} - {problem.question_title}
-          Solved: {problem.solved}
+          {/* Title contains link to problem on leetcode */}
+          <a
+            href={titleToURL(problem.question_title)}
+            className="text-blue-600 underline"
+          >
+            Problem: No. {problem.question_id} - {problem.question_title}{" "}
+          </a>
+          | Solved: {problem.solved}
         </div>
       )
     );
@@ -80,9 +87,10 @@ export const History = () => {
             All Problems
           </button>
         </div>
-        <div>{buttons}</div>
-        <div className="flashcard-bundles">{display}</div>
+        <div className="flashcard-bundles">{buttons}</div>
+        <div> {display}</div>
       </section>
+      <LogoutButton clickHandler={() => navigate("/logout")} />
     </div>
   );
 };
