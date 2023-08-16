@@ -13,6 +13,7 @@ export const problemLogSlice = createSlice({
         "minimum-time-takes-to-reach-destination-without-drowning",
       difficulty: 3,
       priority: 3,
+      solved: false,
     },
     {
       question_id: 3030,
@@ -20,6 +21,7 @@ export const problemLogSlice = createSlice({
       question_title_slug: "find-the-k-th-lucky-number",
       difficulty: 2,
       priority: 1,
+      solve: true,
     },
     {
       question_id: 3016,
@@ -27,6 +29,7 @@ export const problemLogSlice = createSlice({
       question_title_slug: "count-nodes-that-are-great-enough",
       difficulty: 3,
       priority: 3,
+      solved: false,
     },
     {
       question_id: 3001,
@@ -34,6 +37,7 @@ export const problemLogSlice = createSlice({
       question_title_slug: "apply-operations-to-maximize-score",
       difficulty: 3,
       priority: 2,
+      solved: true,
     },
   ],
   reducers: {

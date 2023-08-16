@@ -31,6 +31,7 @@ export const ProblemDisplay = () => {
       priority: priority.current,
       date: Date.now(),
       solved,
+      user,
     };
     // console.log(problemObject);
 
@@ -41,13 +42,15 @@ export const ProblemDisplay = () => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     }).then((response) => response.json());
-    console.log(problemSaved);
+    //console.log(problemSaved);
     //if(problemSaved === 'SUCCESS!!!')
   };
 
   return (
     <div>
-      {/* <button onClick={(e) => navigate('/history')}>Practice Old Problems</button> */}
+      <button onClick={(e) => navigate("/history")}>
+        Practice Old Problems
+      </button>
       <form onSubmit={handleURLSubmit}>
         <input
           type="text"
