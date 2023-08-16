@@ -29,6 +29,7 @@ export const ProblemDisplay = () => {
     const problemObject = {
       ...problem,
       priority: priority.current,
+      date: Date.now(),
       solved,
     };
     // console.log(problemObject);
@@ -64,7 +65,7 @@ export const ProblemDisplay = () => {
           id="mark-high-prio"
           type="button"
           key="high-prio"
-          onClick={() => (priority.current = "High")}
+          onClick={() => (priority.current = 3)}
         >
           High Priority
         </button>
@@ -72,7 +73,7 @@ export const ProblemDisplay = () => {
           id="mark-medium-prio"
           type="button"
           key="med-prio"
-          onClick={() => (priority.current = "Medium")}
+          onClick={() => (priority.current = 2)}
         >
           Medium Priority
         </button>
@@ -80,7 +81,7 @@ export const ProblemDisplay = () => {
           id="mark-low-prio"
           type="button"
           key="low-prio"
-          onClick={() => (priority.current = "Low")}
+          onClick={() => (priority.current = 1)}
         >
           Low Priority
         </button>
