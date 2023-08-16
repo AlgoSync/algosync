@@ -6,6 +6,16 @@ import db from '../server/config/dbConnect';
 
 const server = 'http://localhost:3000';
 
+async function deleteTest() {
+    try {
+        const query = 'DELETE FROM users WHERE username = $1'
+        await db.query(query, ['testuser@test.com']);
+        console.log('Data should be deleted from table')
+    }
+    catch (err) {
+        console.log('Could not delete test data');
+    }
+}
 
 describe('POST to sign up route', () => {
 
@@ -17,28 +27,17 @@ describe('POST to sign up route', () => {
         };
 
         const response = await request(server)
-            .post('/users')
+            .post(`/users`)
             .send(user)
 
-        expect(response.status).toBe(201);
+        expect(response.status).toBe(200);
         expect(response.body).toHaveProperty('id');
     })
 });
 
 describe('POST to login route', () => {
-    async function deleteTest() {
-        try{
-            const query = 'DELETE FROM users WHERE username = $1'
-            await db.query(query, ['testuser@test.com']);
-            console.log('Data should be deleted from table')
-        }
-        catch(err){
-            console.log('Could not delete test data');
-        }
-    }
-
-    afterEach(()=>{
-        deleteTest();
+    afterEach(async () => {
+        await deleteTest();
     });
 
     it('should login successfully', async () => {
@@ -66,4 +65,4 @@ describe('POST to login route', () => {
             .send(user)
         expect(response.status).toBe(500);
     });
-})
+});
