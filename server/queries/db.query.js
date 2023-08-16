@@ -37,7 +37,6 @@ CREATE TABLE flashcards (
 // create users
 query.createUser =
   "INSERT INTO users(email, password) VALUES($1, $2) RETURNING *";
-
 // create flashcards
 query.createFlashcardCustomized = `INSERT INTO flashcards(
         user_id, 
@@ -50,22 +49,28 @@ query.createFlashcardCustomized = `INSERT INTO flashcards(
         date_last_solved
     ) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`;
 
-query.createFlashcardDefaults = `INSERT INTO flashcards(
+/*
+query.createFlashcardDefaults =
+    `INSERT INTO flashcards(
         user_id, 
         question_id, 
         question_title, 
         difficulty, 
         priority
     ) VALUES ($1, $2, $3, $4, $5) RETURNING *;`;
+*/
 
 // read
 
+// selecting a user for verify user (already complete)
+query.getUser = `SELECT * FROM users WHERE email = $1;`;
+// selecting one problem in the DB based on the slug
+query.getProblem = `SELECT * FROM problems WHERE question_title_slug = $1;`;
 // selecting all the flashcards for a given user, based on the user ID
-// selecting all flashcards for a given user, based on a given difficulty level
-// selecting one flashcard based on the flashcard ID
-
+query.getUserFlashcards = `SELECT * FROM flashcards WHERE user_id = $1;`;
 // Note: everything below this line is a lower priority.
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
+// selecting one flashcard based on the flashcard ID
 
 // update
 

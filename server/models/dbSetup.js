@@ -33,40 +33,57 @@ client.connect();
 //     .catch(err => console.error('Error creating table:', err));
 
 // const copyQuery = `
-//     COPY problems FROM '/leetcode_problems.csv' DELIMITER ',' CSV HEADER;
-//     `;
-
-// client.query(copyQuery)
-//     .then(() => console.log('Data loaded successfully'))
-//     .catch(err => console.error('Error loading data:', err));
-
-/*
-const copyQuery = `
-COPY problems FROM STDIN CSV HEADER;
-`;
-
-// const copyQuery = `
-// COPY problems FROM STDIN DELIMITER ',' CSV HEADER;
+//     COPY problems FROM STDIN DELIMITER ',' CSV HEADER;
 // `;
 
-
 // Use client.copyFromStream to pipe data from a readable stream (e.g., your CSV file) to STDIN
-const stream = fs.createReadStream('./leetcode_problems.csv');
-const query = client.query(from(copyQuery));
-stream.pipe(query)
-    .on('finish', () => {
-        console.log('Data loaded successfully');
+// const stream = fs.createReadStream('./leetcode_problems.csv');
+// const query = client.query(from(copyQuery));
+// stream.pipe(query)
+//     .on('finish', () => {
+//         console.log('Data loaded successfully');
+//         client.end();
+//     })
+//     .on('error', err => {
+//         console.error('Error loading data:', err);
+//         client.end();
+//     });
+
+// for debugging why selecting the problem by the slug title isn't working
+const selectQuery = `
+    SELECT * FROM problems 
+    WHERE question_title_slug = 
+    'minimum-time-takes-to-reach-destination-without-drowning';
+`
+client.query(selectQuery)
+    .then((data) => {
+        console.log(`Title: ${data.rows[0].question_title}`);
         client.end();
     })
-    .on('error', err => {
+    .catch(err => {
         console.error('Error loading data:', err);
         client.end();
     });
+
+/*
+rows: [
+    {
+      question_id: 3043,
+      question_title: ' Minimum Time Takes to Reach Destination Without Drowning',
+      question_title_slug: ' minimum-time-takes-to-reach-destination-without-drowning',
+      question_difficulty: 3
+    }
+  ]
 */
 
-// TODO: for debugging why selecting the problem by the slug title isn't working
-const selectQuery = `
-    SELECT * FROM problems WHERE problems.question_id = 3043 LIMIT 10;
-`
+// Archive
+// back when I thought I had Admin permissions lmao
+/*
+const copyQuery = `
+    COPY problems FROM '/leetcode_problems.csv' DELIMITER ',' CSV HEADER;
+    `;
 
-client.end();
+client.query(copyQuery)
+    .then(() => console.log('Data loaded successfully'))
+    .catch(err => console.error('Error loading data:', err));
+*/
