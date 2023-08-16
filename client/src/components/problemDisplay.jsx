@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setProblem } from "../state/workingProblem";
 export const ProblemDisplay = () => {
   const problem = useSelector((state) => state.workingProblem);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const problemURL = useRef(null);
   const priority = useRef(null);
@@ -26,6 +27,10 @@ export const ProblemDisplay = () => {
       console.log("please mark problem review priority");
       return;
     }
+
+    /// this is the data that can reasonably sent back from a URL-based problem.
+    //it includes difficulty , title, number, priority, date, and the user (which may be an object in our final iteration or the user_id as needed by the table )
+    // time solved and date last solved will have to be matched by the backend with any existing version of the problem in the DB.
     const problemObject = {
       ...problem,
       priority: priority.current,
@@ -33,7 +38,6 @@ export const ProblemDisplay = () => {
       solved,
       user,
     };
-    // console.log(problemObject);
 
     // PUT request to
     const problemSaved = await fetch("/api/problems", {
@@ -42,8 +46,6 @@ export const ProblemDisplay = () => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     }).then((response) => response.json());
-    //console.log(problemSaved);
-    //if(problemSaved === 'SUCCESS!!!')
   };
 
   return (
