@@ -1,44 +1,26 @@
 import db from "../config/dbConnect.js";
 import fetch from "node-fetch";
+import query from "../queries/db.query.js";
 
 const ProblemsController = {
   getProblem: async (req, res, next) => {
     console.log("getProblemHIT!!!");
+    //PULL URL OFF REQ QUERY
     const { url } = req.query;
     const problem_slug = url.match(/\/([^/]+)\/$/)[1];
-    console.log(problem_slug);
+    console.log("problemsController.js line 11 slug: ", problem_slug);
 
     try {
-      //NEEDS TO BE REDONE TO QUERY DATABASE INSTEAD********
-      const problems = await fetch(
-        "https://leetcode.com/api/problems/algorithms/"
-      );
-
-      const parsedResponse = await problems.json();
-
-      const list = parsedResponse["stat_status_pairs"].map((problem) => {
-        return {
-          question_id: problem.stat.question_id,
-          question_title: problem.stat.question__title,
-          question_title_slug: problem.stat.question__title_slug,
-          difficulty: problem.difficulty.level,
-        };
-      });
-
-      //console.log(list);
-
-      const finalProblem = await list.filter(
-        (problem) => problem.question_title_slug === problem_slug
-      )[0];
-      console.log(finalProblem);
-
-      //console.log(parsedResponse);
-
-      //console.log(problems);
-      next();
+      //BUILD VALUES ARRAY FOR INSERT
+      const values = [problem_slug];
+      //INITIATE INSERT TO DATABASE
+      const getProblem = await db.query(query.getProblem, values);
+      //BUILD RES.LOCALS RESPONSE OBJECT
+      res.locals.problem = getProblem.rows[0];
+      return next();
     } catch (error) {
       return next({
-        log: "Express error in getProblem Middleware",
+        log: `${error}`,
         status: 503,
         message: { err: "An error occurred while retrieving information" },
       });
@@ -47,13 +29,22 @@ const ProblemsController = {
 
   getUsersProblems: async (req, res, next) => {
     //PULL USER ID OFF REQ PARAMS
+    const { user_id } = req.params;
+    console.log(user_id);
     try {
-      //BUILD QUERY
+      //BUILD VALUES ARRAY
+      const values = [user_id];
       //INITIATE QUERY TO DB
+      const usersProblems = await db.query(query.getUserFlashcards, values);
+      console.log(usersProblems);
       //BUILD RES.LOCALS RESPONSE OBJECT
+      res.locals.problems = usersProblems.rows;
+
+      //PASS OUT OF MIDDLEWARE
+      return next();
     } catch (error) {
       return next({
-        log: "Express error in getUsersProblems Middleware",
+        log: `${error}`,
         status: 503,
         message: { err: "An error occurred during problem retrieval" },
       });
@@ -61,15 +52,45 @@ const ProblemsController = {
   },
 
   addProblem: async (req, res, next) => {
+    console.log(req.body);
     //PULL DATA OFF REQ BODY
+    const {
+      user_id,
+      question_id,
+      question_title,
+      question_difficulty,
+      priority,
+      solved,
+      times_solved,
+      date,
+    } = req.body;
+
+    const difficulty = question_difficulty;
+    const date_last_solved = date;
+    const is_solved = solved;
+
     try {
-      //BUILD QUERY
       //BUILD VALUES ARRAY FOR INSERT
+      const values = [
+        user_id,
+        question_id,
+        question_title,
+        difficulty,
+        priority,
+        is_solved,
+        times_solved,
+        date_last_solved,
+      ];
       //INITIATE INSERT TO DATABASE
-      //BUILD RES.LOCALS RESPONSE OBJECT
+      const newProblem = await db.query(
+        query.createFlashcardCustomized,
+        values
+      );
+      //BUILD RES.LOCALS RESPONSE OBJECT IF NEEDED
+      return next();
     } catch (error) {
       return next({
-        log: "Express error in addproblem Middleware",
+        log: `${error}`,
         status: 503,
         message: { err: "An error occurred while attempting to add problem" },
       });

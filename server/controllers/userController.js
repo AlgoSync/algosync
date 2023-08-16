@@ -1,6 +1,7 @@
 import db from "../config/dbConnect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import query from "../queries/db.query.js";
 
 const UserController = {
   createUser: async (req, res, next) => {
@@ -11,10 +12,9 @@ const UserController = {
         res.json("Invalid Email");
       } else {
         const hashed = await bcrypt.hash(password, 10);
-        const query =
-          "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *";
+
         const values = [email, hashed];
-        const newUser = await db.query(query, values);
+        const newUser = await db.query(query.createUser, values);
 
         const accessToken = jwt.sign(newUser.rows[0], process.env.SECRET, {
           expiresIn: "1h",
