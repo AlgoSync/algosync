@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setProblemLogDisplay } from "../state/logDisplay";
+import { useNavigate } from "react-router-dom";
 import { all } from "axios";
 export const History = () => {
   const allProblems = useSelector((state) => state.problemsLog);
   const displayProblems = useSelector((state) => state.displayProblems);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //  this piece of state's sole job is to turn the array of display problem objects into elements to be rendered (see two effect hooks down) .
+  // we can move it to the store to be consistent.
   const [display, setDisplay] = useState([]);
+
   // effect hook to set display problems once
   useEffect(() => {
     dispatch(setProblemLogDisplay(allProblems));
   }, []);
 
+  // effect hook to create divs for each display problem and trigger re-render on change to state
   useEffect(() => {
-    console.log("effect hook : ", displayProblems);
     const displayProblemComponents = [];
     displayProblems.forEach((problem, index) =>
       displayProblemComponents.push(
@@ -27,17 +33,7 @@ export const History = () => {
     setDisplay(displayProblemComponents);
   }, [displayProblems]);
 
-  // six buttons, one per category
-  const priorityKeys = {
-    1: "Low Priority",
-    2: "Medium Priority",
-    3: "High Priority",
-  };
-  const difficultyKeys = {
-    1: "Easy Difficulty",
-    2: "Medium Difficulty",
-    3: "Hard Difficulty",
-  };
+  // render buttons for filtering display problems from allProblems
   const buttons = [];
   for (let i = 1; i <= 3; i++) {
     buttons.push(
@@ -69,15 +65,35 @@ export const History = () => {
   return (
     <div>
       <section>
-        <div className="history-heading-container">
-          <h1>AlgoSync</h1>
-        </div>
+        <div className="history-heading-container">Problem Log</div>
         <div>
-          <button>All Problems</button>
-          {buttons}
+          {/* Button to navigate back to  main app page to work on a new problem*/}
+          <button
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 rounded"
+            onClick={() => navigate("/app")}
+          >
+            Try a New Problem
+          </button>
+
+          <button onClick={() => dispatch(setProblemLogDisplay(allProblems))}>
+            All Problems
+          </button>
         </div>
+        <div>{buttons}</div>
         <div className="flashcard-bundles">{display}</div>
       </section>
     </div>
   );
+};
+
+// six buttons, one per category
+const priorityKeys = {
+  1: "Low Priority",
+  2: "Medium Priority",
+  3: "High Priority",
+};
+const difficultyKeys = {
+  1: "Easy Difficulty",
+  2: "Medium Difficulty",
+  3: "Hard Difficulty",
 };
