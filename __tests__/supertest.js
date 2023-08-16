@@ -1,11 +1,11 @@
-const request = require('supertest')
+import request from 'supertest';
 // import path from 'path';
 // import assert from 'assert';
 // import fs from 'fs';
-
+import db from '../server/config/dbConnect';
 
 const server = 'http://localhost:3000';
-const db = require('../server/models/dbModel');
+
 
 describe('POST to sign up route', () => {
 
