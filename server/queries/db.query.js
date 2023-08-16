@@ -64,12 +64,15 @@ query.createFlashcardDefaults =
 
 // read
 
+// selecting a user for verify user (already complete)
+// selecting one problem in the DB based on the slug
+
 // selecting all the flashcards for a given user, based on the user ID
-// selecting all flashcards for a given user, based on a given difficulty level
-// selecting one flashcard based on the flashcard ID
+// inserting a flashcard for a user
 
 // Note: everything below this line is a lower priority. 
 // For MVP purposes, let's focus on building out the entire backend routes for the create and read queries.
+// selecting one flashcard based on the flashcard ID
 
 // update 
 
