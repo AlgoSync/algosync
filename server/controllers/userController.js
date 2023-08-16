@@ -3,9 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const UserController = {
-  //ENDPOINT  POST api/users
-  //PURPOSE   Register a new user
-  //ACCESS    Public
   createUser: async (req, res, next) => {
     try {
       const { password, email } = req.body;
@@ -87,7 +84,7 @@ const UserController = {
       return next({
         log: "Express error in verifyToken Middleware",
         status: 500,
-        message: { err: "An error occurred during verifying token" },
+        message: { err: "An error occurred during token verification" },
       });
     }
   },

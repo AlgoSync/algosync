@@ -9,6 +9,7 @@ const ProblemsController = {
     console.log(problem_slug);
 
     try {
+      //NEEDS TO BE REDONE TO QUERY DATABASE INSTEAD********
       const problems = await fetch(
         "https://leetcode.com/api/problems/algorithms/"
       );
@@ -45,17 +46,16 @@ const ProblemsController = {
   },
 
   getUsersProblems: async (req, res, next) => {
-    //PULL DATA OFF REQ BODY
+    //PULL USER ID OFF REQ PARAMS
     try {
       //BUILD QUERY
-      //BUILD VALUES ARRAY FOR INSERT
-      //INITIATE INSERT TO DATABASE
+      //INITIATE QUERY TO DB
       //BUILD RES.LOCALS RESPONSE OBJECT
     } catch (error) {
       return next({
-        log: "Express error in addproblem Middleware",
+        log: "Express error in getUsersProblems Middleware",
         status: 503,
-        message: { err: "An error occurred during sign-up" },
+        message: { err: "An error occurred during problem retrieval" },
       });
     }
   },
@@ -71,7 +71,7 @@ const ProblemsController = {
       return next({
         log: "Express error in addproblem Middleware",
         status: 503,
-        message: { err: "An error occurred during sign-up" },
+        message: { err: "An error occurred while attempting to add problem" },
       });
     }
   },
