@@ -21,7 +21,7 @@ export const History = () => {
   // effect hook to set display problems once
   useEffect(async () => {
     const problemsLog = user
-      ? await fetch(`/api/problems?id=${user.id}`)
+      ? await fetch(`/api/problems/${user.id}`)
           .then((response) => response.json())
           .then((data) => data.problems)
       : [];
