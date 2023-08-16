@@ -17,6 +17,20 @@ export const Login = () => {
     console.log(email.current, password.current);
 
     // ADD API CALL AND RESPONSE VALIDATION HERE
+    const response = await fetch('/api/users/login', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          email: email.current,
+          password: password.current
+      })
+  });
+
+  const data = await response.json();
+  console.log(data)
+
     dispatch(login(email.current));
     navigate("/app");
   };

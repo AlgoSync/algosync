@@ -9,16 +9,6 @@ import userRoutes from "./routes/userRoutes.js";
 import problemRoutes from "./routes/problemRoutes.js";
 dotenv.config();
 
-//INSTANTIATE DB OBJECT
-
-const query =
-  "INSERT INTO users (user_id, username, password) VALUES (5, 'test2', 'test2') RETURNING *;";
-
-pool
-  .query(query)
-  .then((result) => console.log(result.rows))
-  .catch((err) => console.log("error: ", err));
-
 const app = express();
 app.use(cookieParser());
 app.use(express.json());

@@ -1,15 +1,13 @@
-import db from "../models/dbModel.js";
+import db from "../config/dbConnect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-//ENDPOINT  POST api/users
-//PURPOSE   Register a new user
-//ACCESS    Public
 
 const UserController = {
+  //ENDPOINT  POST api/users
+  //PURPOSE   Register a new user
+  //ACCESS    Public
   createUser: async (req, res, next) => {
     try {
-      console.log("------entering create user controller----");
-      console.log("body: ", req.body);
       const { password, email } = req.body;
       const isValid = email.match(/[\w\d\.]+@[a-z]+\.[\w]+$/gim);
       if (isValid === null) {
@@ -21,9 +19,16 @@ const UserController = {
         const values = [email, hashed];
         const newUser = await db.query(query, values);
 
+        const accessToken = jwt.sign(newUser.rows[0], process.env.SECRET, {
+          expiresIn: "1h",
+        });
+        res.cookie("accessToken", accessToken, {
+          httpOnly: true,
+          secure: true,
+        });
+
         // log the sign up
-        console.log("New user signup:", newUser.rows[0]);
-        //   res.locals.newUser = newUser.rows[0];
+        res.locals.newUser = newUser.rows[0];
       }
       return next();
     } catch (error) {
@@ -35,14 +40,13 @@ const UserController = {
       });
     }
   },
-  // get method for fetching user based off of username
+
   userLogin: async (req, res, next) => {
     try {
-      console.log("------entering userLogin controller----");
-      console.log("body: ", req.body);
-      const { username, password } = req.body;
-      const query = `SELECT * FROM users WHERE username = '${username}'`;
+      const { email, password } = req.body;
+      const query = `SELECT * FROM users WHERE email = '${email}'`;
       const data = await db.query(query);
+      console.log("response from login db request", data.rows);
       const userInfo = data.rows[0];
       const hashedPass = data.rows[0].password;
       const passOk = await bcrypt.compare(password, hashedPass);
@@ -54,6 +58,7 @@ const UserController = {
           httpOnly: true,
           secure: true,
         });
+        res.locals.user = userInfo;
         return next();
       } else {
         return next({
