@@ -1,4 +1,4 @@
-import db from "../models/dbModel.js";
+import db from "../config/dbConnect.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 //ENDPOINT  POST api/users

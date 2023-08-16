@@ -1,11 +1,16 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setProblem } from "../state/workingProblem";
 export const ProblemDisplay = () => {
   const problem = useSelector((state) => state.workingProblem);
   const dispatch = useDispatch();
   const problemURL = useRef(null);
-  const handleSubmit = async (e) => {
+  const priority = useRef(null);
+  const [solved, markSolved] = useState(false);
+  const navigate = useNavigate();
+
+  const handleURLSubmit = async (e) => {
     e.preventDefault();
     if (!problemURL.current) {
       alert("Enter a leetCode problem URL");
@@ -15,9 +20,21 @@ export const ProblemDisplay = () => {
     dispatch(setProblem(problem));
   };
 
+  const handleProblemSubmit = async (e) => {
+    e.preventDefault();
+    const problemObject = {
+      ...problem,
+      priority,
+      solved,
+    };
+
+    // PUT request to
+  };
+
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      {/* <button onClick={(e) => navigate('/history')}>Practice Old Problems</button> */}
+      <form onSubmit={handleURLSubmit}>
         <input
           type="text"
           name="problemURL"
@@ -27,6 +44,27 @@ export const ProblemDisplay = () => {
         <button type="submit"> Practice</button>
       </form>
       Problem: No. {problem.question_id} - {problem.question_title}
+      {/* Section for problem tagging and submission */}
+      <form onSubmit={handleProblemSubmit}>
+        <div>Mark Question Review Priority: </div>
+        <button id="mark-high-prio" onClick={(priority.current = "High")}>
+          High Priority
+        </button>
+        <button id="mark-medium-prio" onClick={(priority.current = "Medium")}>
+          Medium Priority
+        </button>
+        <button id="mark-low-prio" onClick={(priority.current = "Low")}>
+          Low Priority
+        </button>
+        <label>
+          <input
+            type="checkbox"
+            checked={solved}
+            onClick={() => markSolved(!solved)}
+          />
+        </label>
+        <button type="submit"> Save Problem </button>
+      </form>
     </div>
   );
 };

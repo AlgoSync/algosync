@@ -22,6 +22,7 @@ export const Signup = () => {
     }
 
     // ADD API CALL AND VALIDATION   HERE
+
     dispatch(login(email.current));
     navigate("/app");
   };
