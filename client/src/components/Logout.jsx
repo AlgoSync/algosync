@@ -8,7 +8,12 @@ import SpinningCircles from "react-loading-icons/dist/esm/components/spinning-ci
 export const LogoutButton = ({ clickHandler }) => {
   return (
     <div>
-      <button onClick={clickHandler}> Logout</button>
+      <button
+        className="bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-2 rounded"
+        onClick={clickHandler}
+      >
+        Logout
+      </button>
     </div>
   );
 };
