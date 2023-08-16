@@ -21,7 +21,7 @@ export const History = () => {
   // effect hook to set display problems once
   useEffect(async () => {
     const problemsLog = user
-      ? await fetch(`/api?id=${user.id}`)
+      ? await fetch(`/api/problems?id=${user.id}`)
           .then((response) => response.json())
           .then((data) => data.problems)
       : [];
@@ -83,7 +83,9 @@ export const History = () => {
   return (
     <div>
       <div className="flex flex-col justify-center max-w-6xl mx-auto px-6 bg-slate-50 drop-shadow-lg border-solid border-2 border-gray-500 rounded-xl h-full w-4/5">
-        <div className="flex flex-row justify-center text-3xl my-4">Problems Log</div>
+        <div className="flex flex-row justify-center text-3xl my-4">
+          Problems Log
+        </div>
         <div className="flex flex-row justify-center">
           {/* Button to navigate back to  main app page to work on a new problem*/}
           <button
@@ -95,12 +97,17 @@ export const History = () => {
         </div>
         <div className="flex flex-col items-center">
           <div className="text-xl my-4">Filter Problems By:</div>
-          <button onClick={() => dispatch(setProblemLogDisplay(allProblems))} className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 mx-6 rounded">
+          <button
+            onClick={() => dispatch(setProblemLogDisplay(allProblems))}
+            className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-2 mx-6 rounded"
+          >
             All Problems
           </button>
         </div>
-        <div className="grid md:grid-cols-6 grid-cols-3 my-6 mx-6 justify-around">{buttons}</div>
-        <div > {display}</div>
+        <div className="grid md:grid-cols-6 grid-cols-3 my-6 mx-6 justify-around">
+          {buttons}
+        </div>
+        <div> {display}</div>
       </div>
       <div className="flex flex-row justify-center items-end h-20">
         <LogoutButton clickHandler={() => navigate("/logout")} />
