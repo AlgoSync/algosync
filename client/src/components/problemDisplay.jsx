@@ -51,6 +51,7 @@ export const ProblemDisplay = () => {
       priority: priority.current,
       date: Date.now(),
       solved,
+      times_solved: solved ? 1 : 0,
       user_id: user.user_id,
     };
 
