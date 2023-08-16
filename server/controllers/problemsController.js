@@ -1,5 +1,6 @@
 import db from "../config/dbConnect.js";
 import fetch from "node-fetch";
+import query from "../queries/db.query.js";
 
 const ProblemsController = {
   getProblem: async (req, res, next) => {
@@ -9,32 +10,7 @@ const ProblemsController = {
     console.log(problem_slug);
 
     try {
-      //NEEDS TO BE REDONE TO QUERY DATABASE INSTEAD********
-      const problems = await fetch(
-        "https://leetcode.com/api/problems/algorithms/"
-      );
-
-      const parsedResponse = await problems.json();
-
-      const list = parsedResponse["stat_status_pairs"].map((problem) => {
-        return {
-          question_id: problem.stat.question_id,
-          question_title: problem.stat.question__title,
-          question_title_slug: problem.stat.question__title_slug,
-          difficulty: problem.difficulty.level,
-        };
-      });
-
-      //console.log(list);
-
-      const finalProblem = await list.filter(
-        (problem) => problem.question_title_slug === problem_slug
-      )[0];
-      console.log(finalProblem);
-
-      //console.log(parsedResponse);
-
-      //console.log(problems);
+      const values = [];
       next();
     } catch (error) {
       return next({
@@ -62,11 +38,35 @@ const ProblemsController = {
 
   addProblem: async (req, res, next) => {
     //PULL DATA OFF REQ BODY
+    const {
+      user_id,
+      question_id,
+      question_title,
+      difficulty,
+      priority,
+      is_solved,
+      times_solved,
+      date_last_solved,
+    } = req.body;
     try {
-      //BUILD QUERY
       //BUILD VALUES ARRAY FOR INSERT
+      const values = [
+        user_id,
+        question_id,
+        question_title,
+        difficulty,
+        priority,
+        is_solved,
+        times_solved,
+        date_last_solved,
+      ];
       //INITIATE INSERT TO DATABASE
-      //BUILD RES.LOCALS RESPONSE OBJECT
+      const newProblem = await db.query(
+        query.createFlashcardCustomized,
+        values
+      );
+      //BUILD RES.LOCALS RESPONSE OBJECT IF NEEDED
+      next();
     } catch (error) {
       return next({
         log: "Express error in addproblem Middleware",
