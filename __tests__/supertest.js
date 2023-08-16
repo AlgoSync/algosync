@@ -34,6 +34,19 @@ describe('POST to sign up route', () => {
             .expect(200)
        
     })
+
+    it('should not add a new account to database because email is broken', () => {
+        // create test user account to be submitted
+        const user = {
+            "email": "testusercom",
+            "password": "12345"
+        };
+
+        const response = request(server)
+            .post(`/api/users`)
+            .expect('Invalid Email')
+       
+    })
 });
 
 describe('POST to login route', () => {
