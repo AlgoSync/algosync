@@ -31,9 +31,9 @@ export const ProblemDisplay = () => {
       return;
     }
     const problem =
-      (await fetch(`/api/problems?url=${problemURL}`).then((response) =>
+      (await fetch(`/api/problems?url=${problemURL.current}`).then((response) =>
         response.json()
-      )) ?? getLeetCodeProblem(problemURL);
+      )) ?? getLeetCodeProblem(problemURL.current);
     dispatch(setProblem(problem));
   };
 
@@ -60,7 +60,7 @@ export const ProblemDisplay = () => {
 
     // PUT request to
     const problemSaved = await fetch("/api/problems", {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(problemObject),
       headers: { "Content-Type": "application/json" },
       credentials: "include",

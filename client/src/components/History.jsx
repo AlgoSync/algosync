@@ -20,7 +20,7 @@ export const History = () => {
 
   // effect hook to set display problems once
   useEffect(() => {
-    fetch(`/api/problems?user_id=${user.id}`)
+    fetch(`/api/problems/${user.user_id}`)
       .then((response) => response.json())
       .then((data) => data.problems)
       .then((problemsLog) => {

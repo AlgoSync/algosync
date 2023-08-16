@@ -9,21 +9,21 @@ const { verifyToken } = UserController;
 //PURPOSE   Get a problem from db
 //ACCESS    Private
 router.get("/", verifyToken, getProblem, (req, res) => {
-  res.status(200).send("Success!!!");
+  res.status(200).send(res.locals.problem);
 });
 
 //ENDPOINT  GET api/problems/:userID
 //PURPOSE   Get a users problem history
 //ACCESS    Private
-router.get("/:userID", verifyToken, getUsersProblems, (req, res) => {
-  res.status(200).send("Success!!!");
+router.get("/:user_id", verifyToken, getUsersProblems, (req, res) => {
+  res.status(200).json({ problems: res.locals.problems });
 });
 
 //ENDPOINT  PUT api/problems
 //PURPOSE   Add a users problem to db
 //ACCESS    Private
 router.put("/", addProblem, (req, res) => {
-  res.status(201).send("Success!!!");
+  res.status(201).json({ message: "saved" });
 });
 
 export default router;
