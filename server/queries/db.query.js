@@ -28,7 +28,7 @@ CREATE TABLE flashcards (
     priority VARCHAR(255) NOT NULL, 
     is_solved BOOLEAN DEFAULT false NOT NULL, 
     times_solved INT DEFAULT 0 NOT NULL, 
-    date_last_solved TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    date_last_solved BIGINT
 );
 */
 
