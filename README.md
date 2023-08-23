@@ -25,7 +25,7 @@ Algorithm practice for aspiring software engineers can be a monster, especially 
 | Algorithm History                                                 | ✅     |
 | Algorithm Tagging                                                 | ✅     |
 | Testing (React Testing Library/Jest front-end, Supertest backend) | ⏳     |
-| Fully intergrated OAuth                                           | ⏳     |
+| Fully intergrated OAuth                                           | 🙏🏻     |
 | Spaced Repetition Suggestion                                      | 🙏🏻     |
 
 # Meet the Team
