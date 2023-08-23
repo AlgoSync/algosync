@@ -18,15 +18,16 @@
 
 Algorithm practice for aspiring software engineers can be a monster, especially when it's unstructured . With the aim of providing a way for aspiring developers to track their progress in practicing challenging algorithms, we are developing a tool to help them keep track of algorithms solved with, as a stretch feature, an automatic system for revisiting old problems to keep their skills honed.
 
-## Features
+# Features
 
-| Feature                                                           | Status |
-| ----------------------------------------------------------------- | ------ |
-| Algorithm History                                                 | ✅     |
-| Algorithm Tagging                                                 | ✅     |
-| Testing (React Testing Library/Jest front-end, Supertest backend) | ⏳     |
-| Fully intergrated OAuth                                           | 🙏🏻     |
-| Spaced Repetition Suggestion                                      | 🙏🏻     |
+| Feature                                       | Status |
+| --------------------------------------------- | ------ |
+| View user Problem-Solving History with filter | ✅     |
+| Problem Lookup, tagging, and saving           | ✅     |
+| Testing Coverage                              | ⏳     |
+| Fully intergrated OAuth                       | 🙏🏻     |
+| Spaced Repetition Suggestion                  | 🙏🏻     |
+| Built-in editor support                       | 🙏🏻     |
 
 # Meet the Team
 
