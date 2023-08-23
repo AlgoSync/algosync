@@ -12,20 +12,26 @@
   ![Jest](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)
   ![Testing Library](https://img.shields.io/badge/testing%20library-323330?style=for-the-badge&logo=testing-library&logoColor=red)
 
+ </div>
 
- </div> 
+# What is AlgoSync?
 
-# What is AlgoSync? 
-Algorithm practice for aspiring software engineers can be a monster, especially when it's unstructured . With the aim of providing a way for aspiring developers to track their progress in practicing challenging algorithms, we are developing a tool to help them keep track of algorithms solved with, as a stretch feature, an automatic system for revisiting old problems to keep their skills honed. 
+Algorithm practice for aspiring software engineers can be a monster, especially when it's unstructured . With the aim of providing a way for aspiring developers to track their progress in practicing challenging algorithms, we are developing a tool to help them keep track of algorithms solved with, as a stretch feature, an automatic system for revisiting old problems to keep their skills honed.
 
-# Features Coming Soon
-- [ ] Algorithm tracking
-- [ ] Algorithm tagging
+## Features
 
+| Feature                                                           | Status |
+| ----------------------------------------------------------------- | ------ |
+| Algorithm History                                                 | ✅     |
+| Algorithm Tagging                                                 | ✅     |
+| Testing (React Testing Library/Jest front-end, Supertest backend) | ⏳     |
+| Fully intergrated OAuth                                           | ⏳     |
+| Spaced Repetition Suggestion                                      | 🙏🏻     |
 
-# Meet the Team 
+# Meet the Team
+
 - [Eric Esposito](https://github.com/Ericesposito)
-- [Joie Zhang](https://github.com/joie-zhang) 
+- [Joie Zhang](https://github.com/joie-zhang)
 - [Paul Glenn](https://github.com/paglenn)
 - [Sean Kelly](https://github.com/brok3turtl3)
 - [Siful Siddiki](https://github.com/sifulsidd)
