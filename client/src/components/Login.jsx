@@ -81,12 +81,12 @@ export const Login = () => {
           </button>
         </div>
       </form>
-      <button
+      {/* <button
         className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-1 px-1 rounded"
         onClick={() => navigate("/app")}
       >
         JUST TAKE ME TO THE APP!
-      </button>
+      </button> */}
     </div>
   );
 };

@@ -114,10 +114,10 @@ export const ProblemDisplay = () => {
               Problem: No. {problem.question_id} - {problem.question_title}
             </div>
             <div>
-              LeetCode Difficulty: {` `}
-              {typeof problem.difficulty === "string"
-                ? problem.difficulty
-                : difficultyKey[problem.difficulty]}{" "}
+              LeetCode Difficulty:{" "}
+              {typeof problem.question_difficulty === "string"
+                ? problem.question_difficulty
+                : difficultyKey[problem.question_difficulty]}
             </div>
           </div>
         ) : null}
